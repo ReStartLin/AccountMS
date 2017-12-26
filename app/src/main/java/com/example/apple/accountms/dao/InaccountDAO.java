@@ -153,7 +153,18 @@ public class InaccountDAO {
         db.close();
         return 0;
     }
+
+    /**
+     * 获取收入最大编号
+     * @return
+     */
     public int getMaxId(){
+        db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select max(_id) from tb_inaccount",null);
+        while (cursor.moveToLast()){
+            Log.d("", "InaccountDAO--getMaxId: 获取成功");
+            return cursor.getInt(0);
+        }
         return 0;
     }
 }
