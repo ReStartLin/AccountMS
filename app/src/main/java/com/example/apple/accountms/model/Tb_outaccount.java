@@ -6,7 +6,7 @@ package com.example.apple.accountms.model;
 
 public class Tb_outaccount {//支出信息实体类
     private int _id;
-    private String money;
+    private double money;
     private String time;
     private String type;
     private String address;
@@ -15,7 +15,7 @@ public class Tb_outaccount {//支出信息实体类
     public Tb_outaccount() {
     }
 
-    public Tb_outaccount(int _id, String money, String time, String type, String address, String mark) {
+    public Tb_outaccount(int _id, double money, String time, String type, String address, String mark) {
         this._id = _id;
         this.money = money;
         this.time = time;
@@ -32,11 +32,11 @@ public class Tb_outaccount {//支出信息实体类
         this._id = _id;
     }
 
-    public String getMoney() {
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(String money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
