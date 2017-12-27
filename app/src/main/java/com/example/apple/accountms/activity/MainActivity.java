@@ -1,7 +1,9 @@
-package com.example.apple.accountms;
+package com.example.apple.accountms.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.apple.accountms.R;
 
 public class MainActivity extends AppCompatActivity {
 

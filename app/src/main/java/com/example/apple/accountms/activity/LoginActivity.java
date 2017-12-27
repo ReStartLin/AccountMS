@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.apple.accountms.MainActivity;
 import com.example.apple.accountms.R;
 import com.example.apple.accountms.dao.PwdDAO;
 
