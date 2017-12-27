@@ -16,7 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.AddInaccount" />
+        <activity android:name=".activity.AddOutaccount" />
+        <activity android:name=".activity.Outaccountinfo" />
+        <activity android:name=".activity.Inaccountinfo" />
+        <activity android:name=".activity.Showinfo" />
+        <activity android:name=".activity.Sysset" />
+        <activity android:name=".activity.Accountflag"></activity>
     </application>
 
 </manifest>
