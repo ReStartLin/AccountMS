@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.apple.accountms.model.Tb_flag;
 import com.example.apple.accountms.model.Tb_pwd;
 
 import java.util.ArrayList;
@@ -40,20 +41,37 @@ public class PwdDAO {
         db.close();
     }
 
-//    /**
-//     * 获取总记录数
-//     * @return
-//     */
-//    public long getCount(){
-//        db = helper.getWritableDatabase();
-//        Cursor cursor = db.rawQuery("select count(_id) from tb_pwd",null);
-//        if (cursor.moveToNext()){
-//            Log.d("", "PwdDAO--getCount: 获取"+cursor.getLong(0)+"条成功");
-//            db.close();
-//            return cursor.getLong(0);
-//        }
-//        db.close();
-//        return 0;
-//    }
+    /**
+     * 获取总记录数
+     * @return
+     */
+    public long getCount(){
+        db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select count(password) from tb_pwd",null);
+        if (cursor.moveToNext()){
+            Log.d("", "PwdDAO--getCount: 获取"+cursor.getLong(0)+"条成功");
+            db.close();
+            return cursor.getLong(0);
+        }
+        db.close();
+        return 0;
+    }
+    /**
+     * 查找便签
+     * @return
+     */
+    public Tb_pwd find(){
+        db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select password from tb_pwd",null);
+        if (cursor.moveToNext()){
+            db.close();
+            Log.d("", "Tb_pwd--find: 查询成功");
+            return new Tb_pwd(
+                    cursor.getString(cursor.getColumnIndex("password"))
+            );
+        }
+        db.close();
+        return null;
+    }
 
 }
