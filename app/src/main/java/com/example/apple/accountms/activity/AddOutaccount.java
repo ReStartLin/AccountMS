@@ -69,6 +69,7 @@ public class AddOutaccount extends AppCompatActivity {
                             txtOutAddress.getText().toString(),txtOutMark.getText().toString());
                     outaccountDAO.add(tb_outaccount);
                     Toast.makeText(AddOutaccount.this, "【新增支出】数据添加成功！", Toast.LENGTH_SHORT).show();
+                    finish();
                 }else {
                     Toast.makeText(AddOutaccount.this, "请输入支出金额", Toast.LENGTH_SHORT).show();
                 }
@@ -77,13 +78,14 @@ public class AddOutaccount extends AppCompatActivity {
         btnOutCancelButton.setOnClickListener(new View.OnClickListener() { //为“取消”按钮设置监听事件
             @Override
             public void onClick(View arg0) {
-                txtOutMoney.setText(""); //设置“金额”文本框为空
-                txtOutMoney.setHint("0.00"); //为“金额”文本框设置提示
-                txtOutTime.setText(""); //设置“时间”文本框为空
-                txtOutTime.setHint("2011-01-01"); //为“时间”文本框设置提示
-                txtOutAddress.setText(""); //设置“地址”文本框为空
-                txtOutMark.setText(""); //设置“备注”文本框为空
-                spOutType.setSelection(0); //设置“类别”下拉列表默认选择第一项
+//                txtOutMoney.setText(""); //设置“金额”文本框为空
+//                txtOutMoney.setHint("0.00"); //为“金额”文本框设置提示
+//                txtOutTime.setText(""); //设置“时间”文本框为空
+//                txtOutTime.setHint("2011-01-01"); //为“时间”文本框设置提示
+//                txtOutAddress.setText(""); //设置“地址”文本框为空
+//                txtOutMark.setText(""); //设置“备注”文本框为空
+//                spOutType.setSelection(0); //设置“类别”下拉列表默认选择第一项
+                finish();
             }
         });
     }

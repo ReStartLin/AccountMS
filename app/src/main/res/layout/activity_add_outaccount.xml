@@ -165,9 +165,9 @@
                 android:id="@+id/btnOutSave"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="41dp"
-                android:layout_marginRight="41dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="39dp"
+                android:layout_marginRight="39dp"
                 android:layout_toLeftOf="@+id/btnOutCancel"
                 android:layout_toStartOf="@+id/btnOutCancel"
                 android:text="保存" />

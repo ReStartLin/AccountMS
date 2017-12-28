@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.example.apple.accountms.R;
 
 public class Showinfo extends AppCompatActivity {
+    public static final String FLAG ="id";//请求码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

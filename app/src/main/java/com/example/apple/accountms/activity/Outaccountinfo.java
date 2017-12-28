@@ -1,8 +1,8 @@
 package com.example.apple.accountms.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,24 +10,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.apple.accountms.R;
-import com.example.apple.accountms.dao.InaccountDAO;
 import com.example.apple.accountms.dao.OutaccountDAO;
-import com.example.apple.accountms.model.Tb_inaccount;
 import com.example.apple.accountms.model.Tb_outaccount;
 
 import java.util.List;
 
 public class Outaccountinfo extends AppCompatActivity {
-
-    public static final String FLAG ="id";//请求码
+    public static final String OUT_TYPE = "btnoutinfo";
     private ListView lvinfo;
     private String strType;
+    private ArrayAdapter<String> arrayAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outaccountinfo);
-        lvinfo = findViewById(R.id.lvinaccountinfo);
+        lvinfo = findViewById(R.id.lvioutaccountinfo);
         showInfo();
         lvinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -35,7 +33,7 @@ public class Outaccountinfo extends AppCompatActivity {
                 String strinfo = String.valueOf(((TextView)view).getText());
                 String strid = strinfo.substring(0,strinfo.indexOf("|"));
                 Intent intent = new Intent(Outaccountinfo.this,InfoManage.class);
-                intent.putExtra(FLAG,new String[]{strid,strType});
+                intent.putExtra(Showinfo.FLAG,new String[]{strid,strType});
                 startActivity(intent);
             }
         });
@@ -43,8 +41,8 @@ public class Outaccountinfo extends AppCompatActivity {
 
     private void showInfo() {
         String[] strinfos = null;
-        ArrayAdapter<String> arrayAdapter = null;
-        strType="btnoutinfo";
+
+        strType=OUT_TYPE;
         OutaccountDAO outaccountDAO = new OutaccountDAO(Outaccountinfo.this);
         List<Tb_outaccount> listinfos = outaccountDAO.getScrollData(0, (int) outaccountDAO.getCount());
         strinfos = new String[listinfos.size()];
@@ -55,5 +53,13 @@ public class Outaccountinfo extends AppCompatActivity {
         }
         arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,strinfos);
         lvinfo.setAdapter(arrayAdapter);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (arrayAdapter != null){
+            arrayAdapter.notifyDataSetChanged();
+            lvinfo.setAdapter(arrayAdapter);
+        }
     }
 }

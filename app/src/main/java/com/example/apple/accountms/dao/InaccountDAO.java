@@ -77,7 +77,8 @@ public class InaccountDAO {
      */
     public Tb_inaccount find(int id){
         db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select _id,money,time,type,handler,mark from tb_inaccount where _id='?'",new String[]{String.valueOf(id)});
+//        Cursor cursor = db.rawQuery("select _id,money,time,type,handler,mark from tb_inaccount where _id='?'",new String[]{String.valueOf(id)});
+        Cursor cursor = db.rawQuery("select _id,money,time,type,handler,mark from tb_inaccount where _id="+String.valueOf(id),null);
         if (cursor.moveToNext()){
             db.close();
             Log.d("", "InaccountDAO--find: 查询成功");

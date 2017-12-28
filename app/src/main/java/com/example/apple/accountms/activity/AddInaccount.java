@@ -2,14 +2,13 @@ package com.example.apple.accountms.activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.apple.accountms.R;
@@ -70,6 +69,7 @@ public class AddInaccount extends AppCompatActivity {
                             txtInHandler.getText().toString(),txtInMark.getText().toString());
                     inaccountDAO.add(tb_inaccount);
                     Toast.makeText(AddInaccount.this, "【新增收入】数据添加成功！", Toast.LENGTH_SHORT).show();
+                    finish();
                 }else {
                     Toast.makeText(AddInaccount.this, "请输入收入金额", Toast.LENGTH_SHORT).show();
                 }
@@ -78,13 +78,14 @@ public class AddInaccount extends AppCompatActivity {
         btnInCancelButton.setOnClickListener(new View.OnClickListener() { //为“取消”按钮设置监听事件
             @Override
             public void onClick(View arg0) {
-                txtInMoney.setText(""); //设置“金额”文本框为空
-                txtInMoney.setHint("0.00"); //为“金额”文本框设置提示
-                txtInTime.setText(""); //设置“时间”文本框为空
-                txtInTime.setHint("2011-01-01"); //为“时间”文本框设置提示
-                txtInHandler.setText(""); //设置“付款方”文本框为空
-                txtInMark.setText(""); //设置“备注”文本框为空
-                spInType.setSelection(0); //设置“类别”下拉列表默认选择第一项
+//                txtInMoney.setText(""); //设置“金额”文本框为空
+//                txtInMoney.setHint("0.00"); //为“金额”文本框设置提示
+//                txtInTime.setText(""); //设置“时间”文本框为空
+//                txtInTime.setHint("2011-01-01"); //为“时间”文本框设置提示
+//                txtInHandler.setText(""); //设置“付款方”文本框为空
+//                txtInMark.setText(""); //设置“备注”文本框为空
+//                spInType.setSelection(0); //设置“类别”下拉列表默认选择第一项
+                finish();
             }
         });
     }

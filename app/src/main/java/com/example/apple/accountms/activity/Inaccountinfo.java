@@ -1,8 +1,8 @@
 package com.example.apple.accountms.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,18 +10,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.apple.accountms.R;
-import com.example.apple.accountms.dao.FlagDAO;
 import com.example.apple.accountms.dao.InaccountDAO;
 import com.example.apple.accountms.model.Tb_inaccount;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class Inaccountinfo extends AppCompatActivity {
-    public static final String FLAG ="id";//请求码
+    public static final String IN_TYPE = "btnininfo";
     private ListView lvinfo;
     private String strType;
+    private ArrayAdapter<String> arrayAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +33,7 @@ public class Inaccountinfo extends AppCompatActivity {
                 String strinfo = String.valueOf(((TextView)view).getText());
                 String strid = strinfo.substring(0,strinfo.indexOf("|"));
                 Intent intent = new Intent(Inaccountinfo.this,InfoManage.class);
-                intent.putExtra(FLAG,new String[]{strid,strType});
+                intent.putExtra(Showinfo.FLAG,new String[]{strid,strType});
                 startActivity(intent);
             }
         });
@@ -43,8 +41,8 @@ public class Inaccountinfo extends AppCompatActivity {
 
     private void showInfo() {
         String[] strinfos = null;
-        ArrayAdapter<String> arrayAdapter = null;
-        strType="btnininfo";
+
+        strType=IN_TYPE;
         InaccountDAO inaccountDAO = new InaccountDAO(Inaccountinfo.this);
         List<Tb_inaccount> listinfos = inaccountDAO.getScrollData(0, (int) inaccountDAO.getCount());
         strinfos = new String[listinfos.size()];
@@ -55,5 +53,14 @@ public class Inaccountinfo extends AppCompatActivity {
         }
         arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,strinfos);
         lvinfo.setAdapter(arrayAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (arrayAdapter != null){
+            arrayAdapter.notifyDataSetChanged();
+            lvinfo.setAdapter(arrayAdapter);
+        }
     }
 }
