@@ -120,8 +120,8 @@ public class InaccountDAO {
     public List<Tb_inaccount> getScrollData(int start,int count){
         List<Tb_inaccount> tb_inaccount = new ArrayList<Tb_inaccount>();
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from tb_inaccount limit '?','?'",
-                                                new String[]{String.valueOf(start),String.valueOf(count)});
+        Cursor cursor = db.rawQuery("select * from tb_inaccount limit "+String.valueOf(start)+","+String.valueOf(count),null);
+//                                                new String[]{String.valueOf(start),String.valueOf(count)});
         while (cursor.moveToNext()){
             tb_inaccount.add(new Tb_inaccount(
                     cursor.getInt(cursor.getColumnIndex("_id")),
