@@ -20,6 +20,8 @@ public class Outaccountinfo extends AppCompatActivity {
     private ListView lvinfo;
     private String strType;
     private ArrayAdapter<String> arrayAdapter = null;
+    private OutaccountDAO outaccountDAO = new OutaccountDAO(Outaccountinfo.this);
+    private String[] strinfos = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,13 @@ public class Outaccountinfo extends AppCompatActivity {
     }
 
     private void showInfo() {
-        String[] strinfos = null;
-
         strType=OUT_TYPE;
-        OutaccountDAO outaccountDAO = new OutaccountDAO(Outaccountinfo.this);
+        getData();
+        arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,strinfos);
+        lvinfo.setAdapter(arrayAdapter);
+    }
+    private void getData(){
+        strinfos = null;
         List<Tb_outaccount> listinfos = outaccountDAO.getScrollData(0, (int) outaccountDAO.getCount());
         strinfos = new String[listinfos.size()];
         int m = 0;
@@ -51,14 +56,13 @@ public class Outaccountinfo extends AppCompatActivity {
             strinfos[m] = tb_outaccount.get_id()+"|"+tb_outaccount.getType()+" "+String.valueOf(tb_outaccount.getMoney())+"元   "+tb_outaccount.getTime();
             m++;
         }
-        arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,strinfos);
-        lvinfo.setAdapter(arrayAdapter);
     }
     @Override
     protected void onResume() {
         super.onResume();
         if (arrayAdapter != null){
-            arrayAdapter.notifyDataSetChanged();
+            getData();
+            arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,strinfos);
             lvinfo.setAdapter(arrayAdapter);
         }
     }

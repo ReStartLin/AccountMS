@@ -118,9 +118,9 @@ public class OutaccountDAO {
     public List<Tb_outaccount> getScrollData(int start, int count){
         List<Tb_outaccount> tb_outaccount = new ArrayList<Tb_outaccount>();
         db = helper.getWritableDatabase();
-//        Cursor cursor = db.rawQuery("select * from tb_outaccount limit '?','?'",
-//                new String[]{String.valueOf(start),String.valueOf(count)});
-        Cursor cursor = db.rawQuery("select * from tb_outaccount limit "+String.valueOf(start)+","+String.valueOf(count),null);
+        Cursor cursor = db.rawQuery("select * from tb_outaccount limit ?,?",
+                new String[]{String.valueOf(start),String.valueOf(count)});
+//        Cursor cursor = db.rawQuery("select * from tb_outaccount limit "+String.valueOf(start)+","+String.valueOf(count),null);
         while (cursor.moveToNext()){
             tb_outaccount.add(new Tb_outaccount(
                     cursor.getInt(cursor.getColumnIndex("_id")),

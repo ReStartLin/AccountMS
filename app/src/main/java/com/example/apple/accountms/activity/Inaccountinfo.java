@@ -20,6 +20,8 @@ public class Inaccountinfo extends AppCompatActivity {
     private ListView lvinfo;
     private String strType;
     private ArrayAdapter<String> arrayAdapter = null;
+    private InaccountDAO inaccountDAO = new InaccountDAO(Inaccountinfo.this);
+    private String[] strinfos = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,15 @@ public class Inaccountinfo extends AppCompatActivity {
     }
 
     private void showInfo() {
-        String[] strinfos = null;
 
         strType=IN_TYPE;
-        InaccountDAO inaccountDAO = new InaccountDAO(Inaccountinfo.this);
+
+        getData();
+        arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,strinfos);
+        lvinfo.setAdapter(arrayAdapter);
+    }
+    private void getData(){
+        strinfos = null;
         List<Tb_inaccount> listinfos = inaccountDAO.getScrollData(0, (int) inaccountDAO.getCount());
         strinfos = new String[listinfos.size()];
         int m = 0;
@@ -51,15 +58,13 @@ public class Inaccountinfo extends AppCompatActivity {
             strinfos[m] = tb_inaccount.get_id()+"|"+tb_inaccount.getType()+" "+String.valueOf(tb_inaccount.getMoney())+"元   "+tb_inaccount.getTime();
             m++;
         }
-        arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,strinfos);
-        lvinfo.setAdapter(arrayAdapter);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         if (arrayAdapter != null){
-            arrayAdapter.notifyDataSetChanged();
+            getData();
+            arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,strinfos);
             lvinfo.setAdapter(arrayAdapter);
         }
     }
