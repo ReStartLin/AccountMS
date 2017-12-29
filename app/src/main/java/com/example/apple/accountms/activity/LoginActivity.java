@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 PwdDAO pwdDAO = new PwdDAO(LoginActivity.this);
-                if ((pwdDAO.getCount()==0 | pwdDAO.find().getPassword().isEmpty())
+                if ((pwdDAO.getCount()==0 || pwdDAO.find().getPassword().isEmpty())
                                                 && txtlogin.getText().toString().isEmpty()){
                     //判断是否有密码以及是否输入了密码
                     startActivity(intent);
@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                     //判断输入的密码是否与数据库中的密码一致
                     if (pwdDAO.find().getPassword().equals(txtlogin.getText().toString())){
                         startActivity(intent);
+                        finish();
                     }else {
                         Toast.makeText(LoginActivity.this, "请输入正确的密码！", Toast.LENGTH_SHORT).show();
                     }

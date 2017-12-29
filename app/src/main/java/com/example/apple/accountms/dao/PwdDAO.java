@@ -74,4 +74,10 @@ public class PwdDAO {
         return null;
     }
 
+    public void update(Tb_pwd tb_pwd) {
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("password",tb_pwd.getPassword());
+        db.update("tb_pwd",values,"",null);
+    }
 }
