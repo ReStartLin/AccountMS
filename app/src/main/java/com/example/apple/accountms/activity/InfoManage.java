@@ -92,7 +92,7 @@ public class InfoManage extends AppCompatActivity {
                     inaccountDAO.update(tb_inaccount); //更新收入信息
                 }
                 Toast.makeText(InfoManage.this, "〖数据〗修改成功！", Toast.LENGTH_SHORT).show();
-                finish();
+                reBreak(strType);
             }
         });
         btnDel.setOnClickListener(new View.OnClickListener() {
@@ -104,8 +104,14 @@ public class InfoManage extends AppCompatActivity {
                     inaccountDAO.detele(Integer.parseInt(strid));
                 }
                 Toast.makeText(InfoManage.this, "〖数据〗删除成功！", Toast.LENGTH_SHORT).show();
-                finish();
+                reBreak(strType);
             }
         });
+    }
+    private void reBreak(String retype){
+        Intent i = new Intent();
+        i.putExtra(Showinfo.TYPE,retype);
+        setResult(Showinfo.RESULT_CODE,i);
+        finish();
     }
 }

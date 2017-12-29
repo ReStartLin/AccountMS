@@ -36,7 +36,7 @@ public class FlagManage extends AppCompatActivity {
                 tb_flag.setFlag(txtFlag.getText().toString());
                 flagDAO.update(tb_flag);
                 Toast.makeText(FlagManage.this, "〖便签数据〗修改成功！", Toast.LENGTH_SHORT).show();
-                finish();
+                reBreak();
             }
         });
         btnDel.setOnClickListener(new View.OnClickListener() {
@@ -44,9 +44,15 @@ public class FlagManage extends AppCompatActivity {
             public void onClick(View view) {
                 flagDAO.detele(Integer.parseInt(strid));
                 Toast.makeText(FlagManage.this, "〖便签数据〗删除成功！", Toast.LENGTH_SHORT).show();
-                finish();
+                reBreak();
             }
         });
 
+    }
+    private void reBreak(){
+        Intent i = new Intent();
+        i.putExtra(Showinfo.TYPE,Showinfo.FLAG_TYPE);
+        setResult(Showinfo.RESULT_CODE,i);
+        finish();
     }
 }

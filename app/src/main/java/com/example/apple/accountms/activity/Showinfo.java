@@ -22,10 +22,15 @@ import java.util.List;
 
 public class Showinfo extends AppCompatActivity {
     public static final String FLAG = "id";//请求码
+    public static final String TYPE = "type";//请求码
+    public static final int CODE = 101;
     public static final String FLAG_TYPE = "btnflaginfo";
+    public static final int RESULT_CODE = 100;
     private Button btnflaginfo, btnininfo, btnoutinfo;
     private ListView lvinfo;
     private String strType = null;
+    private String[] strInfos = null;
+    private ArrayAdapter<String> arrayAdapter = null;
 
 
     @Override
@@ -70,60 +75,78 @@ public class Showinfo extends AppCompatActivity {
                     intent = new Intent(Showinfo.this, FlagManage.class); //使用FlagManage窗口初始化Intent对象
                     intent.putExtra(FLAG, strid); //设置要传递的数据
                 }
-                startActivity(intent); //执行Intent，打开相应的Activity
+                startActivityForResult(intent,CODE);
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CODE && resultCode == RESULT_CODE){
+            String reType = data.getStringExtra(TYPE);
+            upData(reType);
+            if (arrayAdapter != null){
+                arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strInfos);
+                lvinfo.setAdapter(arrayAdapter); //为ListView列表设置数据源
+            }
+        }
+    }
+
     private void showInfo(int intType) {
-        String[] strInfos = null;
-        ArrayAdapter<String> arrayAdapter = null;
         switch (intType) {
             case R.id.btnoutinfo:
                 strType = Outaccountinfo.OUT_TYPE;
+
+                break;
+            case R.id.btnininfo: //如果是btnininfo按钮
+                strType = Inaccountinfo.IN_TYPE;
+                break;
+            case R.id.btnflaginfo: //如果是btnflaginfo按钮
+                strType = FLAG_TYPE;
+
+                break;
+        }
+        upData(strType);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strInfos);
+        lvinfo.setAdapter(arrayAdapter); //为ListView列表设置数据源
+    }
+    private void upData(String type){
+        strInfos = null;
+        switch (type){
+            case Outaccountinfo.OUT_TYPE:
                 OutaccountDAO outaccountDAO = new OutaccountDAO(Showinfo.this);
                 List<Tb_outaccount> listoutinfos = outaccountDAO.getScrollData(0, (int) outaccountDAO.getCount());
                 strInfos = new String[listoutinfos.size()]; //设置字符串数组的长度
                 int i = 0; //定义一个开始标识
                 for (Tb_outaccount tb_outaccount : listoutinfos) { //遍历List泛型集合
-//将支出相关信息组合成一个字符串，存储到字符串数组的相应位置
                     strInfos[i] = tb_outaccount.get_id() + "|" + tb_outaccount.getType() + " " + String.valueOf(tb_outaccount.getMoney()) + "元 " + tb_outaccount.getTime();
                     i++; //标识加1
                 }
                 break;
-            case R.id.btnininfo: //如果是btnininfo按钮
-                strType = Inaccountinfo.IN_TYPE;
-//                strType="btnininfo"; //为strType变量赋值
+            case Inaccountinfo.IN_TYPE:
                 InaccountDAO inaccountinfo = new InaccountDAO(Showinfo.this); //创建InaccountDAO对象
-//获取所有收入信息，并存储到List泛型集合中
                 List<Tb_inaccount> listinfos = inaccountinfo.getScrollData(0, (int) inaccountinfo.getCount());
                 strInfos = new String[listinfos.size()]; //设置字符串数组的长度
                 int m = 0; //定义一个开始标识
                 for (Tb_inaccount tb_inaccount : listinfos) { //遍历List泛型集合
-//将收入相关信息组合成一个字符串，存储到字符串数组的相应位置
                     strInfos[m] = tb_inaccount.get_id() + "|" + tb_inaccount.getType() + " " + String.valueOf(tb_inaccount.getMoney()) + "元 " + tb_inaccount.getTime();
                     m++; //标识加1
                 }
                 break;
-            case R.id.btnflaginfo: //如果是btnflaginfo按钮
-//                strType="btnflaginfo"; //为strType变量赋值
-                strType = FLAG_TYPE;
+            case FLAG_TYPE:
                 FlagDAO flaginfo = new FlagDAO(Showinfo.this); //创建FlagDAO对象
-//获取所有便签信息，并存储到List泛型集合中
                 List<Tb_flag> listFlags = flaginfo.getScrollData(0, (int) flaginfo.getCount());
                 strInfos = new String[listFlags.size()]; //设置字符串数组的长度
                 int n = 0; //定义一个开始标识
                 for (Tb_flag tb_flag : listFlags) { //遍历List泛型集合
-//将便签相关信息组合成一个字符串，存储到字符串数组的相应位置
                     strInfos[n] = tb_flag.get_id() + "|" + tb_flag.getFlag();
                     if (strInfos[n].length() > 15) //判断便签信息的长度是否大于15
-//将位置大于15之后的字符串用"……"代替
                         strInfos[n] = strInfos[n].substring(0, 15) + "……";
                     n++; //标识加1
                 }
                 break;
         }
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strInfos);
-        lvinfo.setAdapter(arrayAdapter); //为ListView列表设置数据源
+
     }
 }
