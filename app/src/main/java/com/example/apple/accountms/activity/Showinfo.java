@@ -68,14 +68,14 @@ public class Showinfo extends AppCompatActivity {
                 String strInfo = String.valueOf(((TextView) view).getText()); //记录单击的项信息
                 String strid = strInfo.substring(0, strInfo.indexOf('|')); //从项信息中截取编号
                 Intent intent = null; //创建Intent对象
-                if (strType == Outaccountinfo.OUT_TYPE | strType == Inaccountinfo.IN_TYPE) { //判断如果是支出或者收入信息
+                if (strType.equals(Outaccountinfo.OUT_TYPE) || strType.equals(Inaccountinfo.IN_TYPE)) { //判断如果是支出或者收入信息btnoutinfo
                     intent = new Intent(Showinfo.this, InfoManage.class); //使用InfoManage窗口初始化Intent对象
                     intent.putExtra(FLAG, new String[]{strid, strType}); //设置要传递的数据
                 } else if (strType == FLAG_TYPE) { //判断如果是便签信息
                     intent = new Intent(Showinfo.this, FlagManage.class); //使用FlagManage窗口初始化Intent对象
                     intent.putExtra(FLAG, strid); //设置要传递的数据
                 }
-                startActivityForResult(intent,CODE);
+                startActivityForResult(intent, CODE);
             }
         });
     }
@@ -83,10 +83,10 @@ public class Showinfo extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CODE && resultCode == RESULT_CODE){
-            String reType = data.getStringExtra(TYPE);
-            upData(reType);
-            if (arrayAdapter != null){
+        if (requestCode == CODE && resultCode == RESULT_CODE) {
+            strType = data.getStringExtra(TYPE);
+            upData(strType);
+            if (arrayAdapter != null) {
                 arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strInfos);
                 lvinfo.setAdapter(arrayAdapter); //为ListView列表设置数据源
             }
@@ -111,9 +111,10 @@ public class Showinfo extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strInfos);
         lvinfo.setAdapter(arrayAdapter); //为ListView列表设置数据源
     }
-    private void upData(String type){
+
+    private void upData(String type) {
         strInfos = null;
-        switch (type){
+        switch (type) {
             case Outaccountinfo.OUT_TYPE:
                 OutaccountDAO outaccountDAO = new OutaccountDAO(Showinfo.this);
                 List<Tb_outaccount> listoutinfos = outaccountDAO.getScrollData(0, (int) outaccountDAO.getCount());
