@@ -24,7 +24,8 @@
         <activity android:name=".activity.Showinfo" />
         <activity android:name=".activity.Sysset" />
         <activity android:name=".activity.Accountflag" />
-        <activity android:name=".activity.InfoManage"></activity>
+        <activity android:name=".activity.InfoManage" />
+        <activity android:name=".activity.FlagManage"></activity>
     </application>
 
 </manifest>

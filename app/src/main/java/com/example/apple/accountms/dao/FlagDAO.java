@@ -64,7 +64,7 @@ public class FlagDAO {
      */
     public Tb_flag find(int id){
         db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select _id,flag from tb_flag where _id='?'",new String[]{String.valueOf(id)});
+        Cursor cursor = db.rawQuery("select _id,flag from tb_flag where _id=?",new String[]{String.valueOf(id)});
         if (cursor.moveToNext()){
             db.close();
             Log.d("", "FlagDAO--find: 查询成功");
@@ -84,7 +84,7 @@ public class FlagDAO {
     public List<Tb_flag> getScrollData(int start, int count){
         List<Tb_flag> tb_flag = new ArrayList<Tb_flag>();
         db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from tb_flag limit '?','?'",
+        Cursor cursor = db.rawQuery("select * from tb_flag limit ?,?",
                 new String[]{String.valueOf(start),String.valueOf(count)});
         while (cursor.moveToNext()){
             tb_flag.add(new Tb_flag(
@@ -127,4 +127,9 @@ public class FlagDAO {
         return 0;
     }
 
+    public void detele(int i) {
+        db = helper.getWritableDatabase();
+        db.delete("tb_flag","_id = ?",new String[]{String.valueOf(i)});
+
+    }
 }
