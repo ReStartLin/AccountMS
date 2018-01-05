@@ -6,11 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.apple.accountms.model.Tb_flag;
 import com.example.apple.accountms.model.Tb_pwd;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by apple on 2017/12/27.
@@ -71,7 +67,7 @@ public class PwdDAO {
             );
         }
         db.close();
-        return null;
+        return new Tb_pwd();
     }
 
     public void update(Tb_pwd tb_pwd) {

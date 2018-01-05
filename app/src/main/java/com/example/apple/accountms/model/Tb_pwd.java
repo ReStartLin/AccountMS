@@ -5,7 +5,7 @@ package com.example.apple.accountms.model;
  */
 
 public class Tb_pwd { //密码信息实体类
-    private String password;
+    private String password="";
 
     public Tb_pwd(String password) {
         this.password = password;
